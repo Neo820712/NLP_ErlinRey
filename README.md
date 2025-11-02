@@ -1,1 +1,9 @@
 # NLP_ErlinRey
+
+## Desafío 1: Vectorización y clasificación con 20 Newsgroups
+
+Este desafío implementa un flujo completo de procesamiento de lenguaje natural, desde la representación de texto hasta la clasificación y el análisis semántico, utilizando el dataset *20 Newsgroups*.
+
+El primer paso consistió en la **vectorización de texto** mediante **tf-idf**. Se realizó un análisis iterativo de la similaridad de documentos (usando similitud coseno), demostrando cómo el filtrado de *stop-words* y el ajuste del hiperparámetro `min_df` (frecuencia mínima de documento) son cruciales para reducir el ruido y mejorar la coherencia semántica de los vectores. Sobre esta representación optimizada, se construyó un clasificador *baseline* de **prototipos (1-nn)**, que sirvió como punto de referencia midiendo la precisión basada puramente en la similitud del vecino más cercano.
+
+La segunda fase se centró en la **clasificación probabilística**. Se entrenaron, compararon y optimizaron modelos **Multinomial Naïve Bayes (MNB)** y **Complement Naïve Bayes (CNB)**. Mediante una búsqueda de hiperparámetros (`alpha` y `min_df`), se buscó maximizar el **f1-score macro**, métrica robusta para este tipo de corpus. El análisis demostró la superioridad de CNB sobre MNB para este dataset, logrando una mejor gestión de las clases con vocabularios solapados. Finalmente, se exploró la **similaridad entre palabras** transponiendo la matriz documento-término; este ejercicio demostró cómo la co-ocurrencia contextual permite agrupar términos semánticamente relacionados (ej. "god" con "jesus", "space" con "nasa"), ilustrando el principio fundamental de la semántica distribucional.

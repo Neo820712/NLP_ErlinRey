@@ -37,3 +37,18 @@ El flujo de trabajo incluyó:
 **Resultados Clave:**
 * **Comparativa de Arquitecturas:** La arquitectura **LSTM** demostró ser la más robusta, alcanzando la menor pérdida y perplejidad en validación, seguida muy de cerca por **GRU**. La **Simple RNN** presentó dificultades significativas para capturar dependencias a largo plazo, evidenciando el problema del desvanecimiento del gradiente.
 * **Generación de Texto:** Se evaluaron estrategias de *Greedy Search* y *Beam Search*. Se concluyó que el **Beam Search Estocástico con temperatura controlada ($T \approx 0.8$)** es indispensable para romper los bucles repetitivos inherentes a los modelos recurrentes básicos, logrando generar secuencias con mayor naturalidad y respeto por el estilo del autor original.
+
+## Desafío 4: traducción inglés-español con atención y embeddings
+
+Este trabajo final aborda la tarea de traducción automática neuronal (neural machine translation), construyendo un sistema capaz de traducir oraciones del inglés al español utilizando el dataset anki.
+
+La arquitectura base fue un modelo seq2seq (encoder-decoder) implementado en pytorch. sin embargo, para superar el "cuello de botella" de información de los modelos recurrentes simples —donde todo el sentido de la frase debe caber en un solo vector—, se tomaron decisiones de diseño inspiradas en cómo procesamos el lenguaje los humanos:
+
+* **Arquitectura bi-lstm + atención:** se implementó un codificador bidireccional para capturar el contexto pasado y futuro de cada palabra. además, se añadió un mecanismo de atención (attention). esto permite al modelo "enfocarse" en las palabras relevantes del texto original al generar cada palabra traducida, rompiendo la limitación de la memoria estática y mejorando drásticamente la gestión de frases largas.
+* **Transferencia de conocimiento:** en lugar de entrenar el vocabulario desde cero, se inyectaron embeddings pre-entrenados (glove para inglés y fasttext para español). la intuición aquí es clara: es más fácil enseñar a traducir a un modelo que ya "conoce" la semántica de las palabras que a uno que debe aprender el idioma y la traducción simultáneamente.
+
+**Resultados y estrategias de generación:**
+
+* **Optimización:** mediante un grid search, se ajustaron hiperparámetros como la tasa de aprendizaje y el tamaño de las capas ocultas, logrando una convergencia estable y evitando el sobreajuste.
+* **Decodificación:** se contrastó la generación greedy frente a beam search. el análisis cualitativo mostró que el beam search es indispensable para evitar "tartamudeos" o repeticiones robóticas, ya que evalúa múltiples futuros posibles antes de comprometerse con una traducción, resultando en textos mucho más naturales y fluidos.
+* **Métrica:** el modelo alcanzó un bleu score de **39.54**, validando la eficacia de combinar recurrencia bidireccional con atención para capturar la complejidad gramatical del español.

@@ -1,19 +1,35 @@
-# --- Archivos de sistema y Python ---
+# --- Archivos de sistema y entorno (Python standard) ---
 __pycache__/
 *.py[cod]
+.venv
+.env
+.ipynb_checkpoints/
 
-# --- Datasets grandes (GloVe y comprimidos) ---
-# Estos archivos pesan más de 300MB y 800MB respectivamente
-glove.6B*
+# --- Modelos de PyTorch (Suelen pesar +100MB) ---
+# Bloqueamos todos los checkpoints para evitar subir pesos por error
+*.pt
+*.pth
+*.bin
+# Específicamente los que veo en tu imagen:
+best_model_attn.pt
+model_final_fixed.pt
+
+# --- Datasets y Embeddings (Archivos masivos) ---
+# Vectores de palabras comprimidos (ej. cc.es.300.vec.gz)
+*.vec.gz
+*.gz
+
+# Archivos GloVe y textos masivos
+# Cuidado: no uso *.txt general para no bloquear requirements.txt
+glove*.txt
+*.vec
+
+# Archivos comprimidos generales
 *.zip
 *.rar
 
-# --- Modelos de IA ---
-# El archivo .pt pesa 96MB, está al límite. GitHub bloquea a los 100MB
-# pero avisa a los 50MB. Es mejor ignorarlo si tienes copia local.
-*.pt
-*.pth
+# --- Carpetas específicas que parecen contener data ---
+# Si la carpeta 'models' solo tiene binarios, es mejor ignorarla completa
 models/
-
-# --- Archivos específicos de tu imagen ---
-glove.6B.100d
+# Carpeta de vectores descomprimidos (si se genera al descomprimir)
+glove*/

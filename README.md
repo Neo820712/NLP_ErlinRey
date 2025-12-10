@@ -6,6 +6,8 @@ Colección de proyectos finales para la materia de Procesamiento de Lenguaje Nat
 2. [Desafío 2: Word Embeddings y Análisis Semántico](#desafío-2-word-embeddings-y-análisis-semántico-con-gensim)
 3. [Desafío 3: Generación de Texto con RNN/LSTM](#desafío-3-modelado-de-lenguaje-con-redes-recurrentes-rnn-gru-lstm)
 4. [Desafío 4: Traducción Neuronal con Atención](#desafío-4-traducción-inglés-español-con-atención-y-embeddings)
+5. [Instalación y configuración](#instalación-y-entorno)
+
 
 ## Desafío 1: Vectorización y Clasificación con 20 Newsgroups
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)

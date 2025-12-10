@@ -2,6 +2,7 @@
 
 ## Desafío 1: Vectorización y clasificación con 20 Newsgroups
 
+![Descripción de la imagen](images/tp1.jpg)
 Este desafío implementa un flujo completo de procesamiento de lenguaje natural, desde la representación de texto hasta la clasificación y el análisis semántico, utilizando el dataset *20 Newsgroups*.
 
 El primer paso consistió en la **vectorización de texto** mediante **tf-idf**. Se realizó un análisis iterativo de la similaridad de documentos (usando similitud coseno), demostrando cómo el filtrado de *stop-words* y el ajuste del hiperparámetro `min_df` (frecuencia mínima de documento) son cruciales para reducir el ruido y mejorar la coherencia semántica de los vectores. Sobre esta representación optimizada, se construyó un clasificador *baseline* de **prototipos (1-nn)**, que sirvió como punto de referencia midiendo la precisión basada puramente en la similitud del vecino más cercano.

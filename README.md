@@ -145,7 +145,7 @@ def get_device():
         print(f"Hardware: NVIDIA GPU ({torch.cuda.get_device_name(0)})")
         return torch.device("cuda")
     
-    # Prioridad 2: GPU Intel (XPU) - Útil si usas Colab con hardware Intel o local
+    # Prioridad 2: GPU Intel (XPU) - Útil si usas  hardware Intel local
     if hasattr(torch, 'xpu') and torch.xpu.is_available():
         print(f"Hardware: Intel GPU ({torch.xpu.get_device_name(0)})")
         return torch.device("xpu")

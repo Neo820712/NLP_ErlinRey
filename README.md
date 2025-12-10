@@ -1,6 +1,13 @@
 # NLP_ErlinRey
+Colección de proyectos finales para la materia de Procesamiento de Lenguaje Natural (NLP) de la Especialización en IA - UBA. Este trabajo aborda el ciclo de vida completo del modelado de texto: preprocesamiento, representación vectorial, entrenamiento y validación de métricas. El repositorio estructura un recorrido que inicia con clasificadores bayesianos y representaciones densas (Gensim), avanza hacia el manejo de secuencias temporales con Redes Recurrentes (RNN/GRU/LSTM) y culmina en sistemas de Traducción Automática Neuronal (Seq2Seq) potenciados por mecanismos de Atención y Transfer Learning. El foco central reside en la comparativa crítica de arquitecturas y la justificación de hiperparámetros para optimizar el rendimiento en escenarios reales.
 
-## Desafío 1: Vectorización y clasificación con 20 Newsgroups
+## Índice
+1. [Desafío 1: Vectorización y Clasificación](#desafío-1-vectorización-y-clasificación-con-20-newsgroups)
+2. [Desafío 2: Word Embeddings y Análisis Semántico](#desafío-2-word-embeddings-y-análisis-semántico-con-gensim)
+3. [Desafío 3: Generación de Texto con RNN/LSTM](#desafío-3-modelado-de-lenguaje-con-redes-recurrentes-rnn-gru-lstm)
+4. [Desafío 4: Traducción Neuronal con Atención](#desafío-4-traducción-inglés-español-con-atención-y-embeddings)
+
+## Desafío 1: Vectorización y Clasificación con 20 Newsgroups
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Scikit-Learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
@@ -74,7 +81,7 @@ ____
  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Neo820712/NLP_ErlinRey/blob/main/ErlinRey_Desafio_3.ipynb)
 ______
 
-## Desafío 4: traducción inglés-español con atención y embeddings
+## Desafío 4: Traducción Inglés-Español con Atención y Embeddings
 
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -102,3 +109,85 @@ ____
 
  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Neo820712/NLP_ErlinRey/blob/main/ErlinRey_Desafio_4.ipynb)
 ______
+
+
+## Configuración de aceleración por hardware
+Dado que los desafíos 3 y 4 involucran el entrenamiento de redes recurrentes (LSTM/GRU), el uso de aceleración por hardware es crítico para reducir los tiempos de cómputo. He diseñado los notebooks para ser agnósticos al hardware, detectando automáticamente si se está ejecutando sobre una GPU NVIDIA (CUDA), gráficos Intel (XPU), Apple Silicon (MPS) o CPU.
+
+### Detección automática del dispositivo
+Para lograr esta portabilidad, utilizo el siguiente bloque de inicialización en los proyectos, el cual prioriza el hardware dedicado disponible:
+
+```python
+import torch
+import sys
+
+def get_device():
+    # Prioridad 1: GPU NVIDIA
+    if torch.cuda.is_available():
+        print(f"Hardware: NVIDIA GPU ({torch.cuda.get_device_name(0)})")
+        return torch.device("cuda")
+    
+    # Prioridad 2: GPU Intel (XPU) - Útil si usas Colab con hardware Intel o local
+    if hasattr(torch, 'xpu') and torch.xpu.is_available():
+        print(f"Hardware: Intel GPU ({torch.xpu.get_device_name(0)})")
+        return torch.device("xpu")
+    
+    # Prioridad 3: Apple Silicon (MPS) - Útil si alguien corre esto en Mac
+    if torch.backends.mps.is_available():
+        print("Hardware: Apple MPS")
+        return torch.device("mps")
+
+    # Fallback: CPU
+    print("Hardware: CPU")
+    return torch.device("cpu")
+
+try:
+    device = get_device()  
+    print(f"PyTorch version: {torch.__version__}")
+    
+    # Prueba rápida de memoria
+    if device.type == 'xpu':  
+        x = torch.ones(1, device=device) 
+        print("Estado: Tensor en GPU creado correctamente")
+
+except Exception as e:
+    print(f"Error al inicializar dispositivo: {e}")
+    device = torch.device("cpu")
+
+print("Dispositivo en uso:", device)
+```
+
+
+### Para usuarios con GPU NVIDIA
+
+```bash
+pip uninstall torch-directml -y
+pip uninstall torch torchvision torchaudio -y
+pip cache purge
+pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu118](https://download.pytorch.org/whl/cu118)
+```
+
+
+### Para usuarios con GPU Intel (Intel Arc / iGPU - XPU):
+
+```bash
+pip uninstall torch torchvision torchaudio -y
+pip cache purge
+pip install --pre torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/nightly/xpu](https://download.pytorch.org/whl/nightly/xpu)
+```
+
+## Instalación y entorno
+Para replicar estos experimentos de forma local, se recomienda utilizar **Python 3.10+** y un entorno virtual para manejar las dependencias.
+
+1. **Clonar el repositorio:**
+```bash
+git clone [https://github.com/Neo820712/NLP_ErlinRey.git](https://github.com/Neo820712/NLP_ErlinRey.git)
+cd NLP_ErlinRey
+pip install -r requirements.txt
+```
+***
+
+### Pasos finales para que todo funcione:
+
+1.  **Crea el archivo `requirements.txt`:** Asegúrate de crear un archivo con ese nombre en la raíz de tu carpeta y pega dentro la lista de librerías que definimos en el paso anterior (numpy, pandas, torch, etc.).
+2.  **Sube ambos:** Recuerda hacer `git add requirements.txt` y `git add README.md` antes de hacer tu commit, para que ambos archivos estén en el repositorio.

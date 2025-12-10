@@ -1,0 +1,25 @@
+# Procesamiento de datos y cálculo numérico
+numpy
+pandas
+scipy
+
+# Visualización
+matplotlib
+seaborn
+plotly
+
+# Machine Learning y NLP Clásico
+scikit-learn
+gensim
+nltk
+
+# Deep Learning (PyTorch)
+# Ver README "Configuración de aceleración por hardware" para GPU/XPU.
+torch
+torchinfo
+
+# Deep Learning (TensorFlow/Keras)
+tensorflow
+
+# Utilidades varias
+gdown

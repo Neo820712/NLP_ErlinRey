@@ -111,6 +111,22 @@ ____
 ______
 
 
+## Instalación y entorno
+Para replicar estos experimentos de forma local, se recomienda utilizar **Python 3.10+** y un entorno virtual para manejar las dependencias.
+
+**Clonar el repositorio:**
+```bash
+git clone [https://github.com/Neo820712/NLP_ErlinRey.git](https://github.com/Neo820712/NLP_ErlinRey.git)
+cd NLP_ErlinRey
+pip install -r requirements.txt
+```
+***
+
+### Pasos finales para que todo funcione:
+
+1.  **Crea el archivo `requirements.txt`:** Asegúrate de crear un archivo con ese nombre en la raíz de tu carpeta y pega dentro la lista de librerías que definimos en el paso anterior (numpy, pandas, torch, etc.).
+2.  **Sube ambos:** Recuerda hacer `git add requirements.txt` y `git add README.md` antes de hacer tu commit, para que ambos archivos estén en el repositorio.
+
 ## Configuración de aceleración por hardware
 Dado que los desafíos 3 y 4 involucran el entrenamiento de redes recurrentes (LSTM/GRU), el uso de aceleración por hardware es crítico para reducir los tiempos de cómputo. He diseñado los notebooks para ser agnósticos al hardware, detectando automáticamente si se está ejecutando sobre una GPU NVIDIA (CUDA), gráficos Intel (XPU), Apple Silicon (MPS) o CPU.
 
@@ -176,18 +192,3 @@ pip cache purge
 pip install --pre torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/nightly/xpu](https://download.pytorch.org/whl/nightly/xpu)
 ```
 
-## Instalación y entorno
-Para replicar estos experimentos de forma local, se recomienda utilizar **Python 3.10+** y un entorno virtual para manejar las dependencias.
-
-1. **Clonar el repositorio:**
-```bash
-git clone [https://github.com/Neo820712/NLP_ErlinRey.git](https://github.com/Neo820712/NLP_ErlinRey.git)
-cd NLP_ErlinRey
-pip install -r requirements.txt
-```
-***
-
-### Pasos finales para que todo funcione:
-
-1.  **Crea el archivo `requirements.txt`:** Asegúrate de crear un archivo con ese nombre en la raíz de tu carpeta y pega dentro la lista de librerías que definimos en el paso anterior (numpy, pandas, torch, etc.).
-2.  **Sube ambos:** Recuerda hacer `git add requirements.txt` y `git add README.md` antes de hacer tu commit, para que ambos archivos estén en el repositorio.
